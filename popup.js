@@ -17,24 +17,33 @@
     			+ '  element.style.display = null;'
     			+ '  element = ' + evaluate
     			+ '}';
-    // Hide divs not containing the serach term
-    xpath = '"//div[starts-with(@class,\'JobsList__row\') and not (contains(@style, \'display\'))]"';
-    evaluate = 'document.evaluate(' + xpath + ', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue';
-    code += 'searchTerm = "' + searchTerm + '";'
-          + 'element = ' + evaluate + ';'
-          + 'while(element) {'
-          + '  if (element.getAttribute("data-aid").includes(searchTerm)) {' 
-          + '    element.style.display = "block";'
-          + '  } else {'
-          + '    element.style.display = "none";'
-          + '  }'
-          + '  element = ' + evaluate
-          + '}';
+	if (searchTerm) {
+	  // Hide divs not containing the serach term
+	  xpath = '"//div[starts-with(@class,\'JobsList__row\') and not (contains(@style, \'display\'))]"';
+	  evaluate = 'document.evaluate(' + xpath + ', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue';
+	  code += 'searchTerm = "' + searchTerm + '";'
+	  	  + 'element = ' + evaluate + ';'
+	  	  + 'while(element) {'
+	  	  + '  if (element.getAttribute("data-aid").includes(searchTerm)) {' 
+	  	  + '    element.style.display = "block";'
+	  	  + '  } else {'
+	  	  + '    element.style.display = "none";'
+	  	  + '  }'
+	  	  + '  element = ' + evaluate
+	  	  + '}';
+	}
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     	chrome.tabs.executeScript(tabs[0].id, {code: code});
     });
   }
   
+  var timeoutId = 0;
+  
   searchTermInput.onkeydown = (element) => {
-    doSearch();
+	if (timeoutId != 0) {
+      clearTimeout(timeoutId);
+	}
+	timeoutId = setTimeout(() => {
+      doSearch();
+    }, 500);
   }
