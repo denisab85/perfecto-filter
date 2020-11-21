@@ -1,5 +1,6 @@
 let searchTermInput = document.getElementById("searchTermInput");
 let slider = document.getElementById("slider");
+let count = document.getElementById("count");
 
 chrome.storage.sync.get("searchTerm", function (data) {
   searchTermInput.value = data.searchTerm;
@@ -24,3 +25,13 @@ searchTermInput.onkeydown = (element) => {
 slider.onclick = () => {
   chrome.storage.sync.set({ enabled: slider.checked }, () => {});
 };
+
+chrome.runtime.onMessage.addListener(({ message, displayed, total }) => {
+  if (message === "filter_updated") {
+    var string = displayed;
+    if (displayed != total) {
+      string += " / " + total;
+    }
+    count.innerHTML = string;
+  }
+});

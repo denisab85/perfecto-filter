@@ -13,6 +13,8 @@ const doFilter = () => {
         location.href
       )
     ) {
+      var total = 0;
+      var displayed = 0;
       // Reset style
       let xpath =
         "//div[starts-with(@class,'JobsList__row') and (contains(@style, 'display'))]";
@@ -26,8 +28,12 @@ const doFilter = () => {
         ).singleNodeValue)
       ) {
         element.style.display = null;
+        total++;
+        displayed++;
       }
       if (data.searchTerm && data.enabled) {
+        total = 0;
+        displayed = 0;
         // Hide divs not containing the serach term
         xpath =
           "//div[starts-with(@class,'JobsList__row') and not (contains(@style, 'display'))]";
@@ -42,11 +48,19 @@ const doFilter = () => {
         ) {
           if (element.getAttribute("data-aid").includes(data.searchTerm)) {
             element.style.display = "block";
+            displayed++;
           } else {
             element.style.display = "none";
           }
+          total++;
         }
       }
+      
+      chrome.runtime.sendMessage({
+        message: "filter_updated",
+        displayed,
+        total,
+      });
     }
   });
 };
