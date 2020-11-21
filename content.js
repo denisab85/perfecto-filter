@@ -1,4 +1,4 @@
-chrome.storage.onChanged.addListener(function (changes, namespace) {
+chrome.storage.onChanged.addListener((changes, namespace) => {
   for (var key in changes) {
     if (key === "enabled" || key === "searchTerm") {
       doFilter();
@@ -13,10 +13,18 @@ const doFilter = () => {
         location.href
       )
     ) {
-      var total = 0;
+      var xpath = "count(//div[starts-with(@class,'JobsList__row')])";
+      const total = document.evaluate(
+        xpath,
+        document,
+        null,
+        XPathResult.ANY_TYPE,
+        null
+      ).numberValue;
+
       var displayed = 0;
       // Reset style
-      let xpath =
+      xpath =
         "//div[starts-with(@class,'JobsList__row') and (contains(@style, 'display'))]";
       while (
         (element = document.evaluate(
@@ -28,11 +36,9 @@ const doFilter = () => {
         ).singleNodeValue)
       ) {
         element.style.display = null;
-        total++;
         displayed++;
       }
       if (data.searchTerm && data.enabled) {
-        total = 0;
         displayed = 0;
         // Hide divs not containing the serach term
         xpath =
@@ -52,10 +58,8 @@ const doFilter = () => {
           } else {
             element.style.display = "none";
           }
-          total++;
         }
       }
-      
       chrome.runtime.sendMessage({
         message: "filter_updated",
         displayed,
