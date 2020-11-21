@@ -60,7 +60,10 @@ var observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       mutation.addedNodes.forEach((addedNode) => {
         if (addedNode.nodeName === "DIV") {
-          doFilter();
+          var className = addedNode.getAttribute("class");
+          if (className && className.startsWith("JobsList")) {
+            doFilter();
+          }
         }
       });
     });
