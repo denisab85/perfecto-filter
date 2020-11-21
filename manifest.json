@@ -2,7 +2,7 @@
   "name": "Perfecto CI Job Filter",
   "version": "0.0.1",
   "description": "Filters job results on the Perfecto CI page by job name",
-  "permissions": ["activeTab", "declarativeContent", "storage", "tabs"],
+  "permissions": ["activeTab", "declarativeContent", "storage"],
   "background": {
     "scripts": ["background.js"],
     "persistent": false
@@ -14,7 +14,8 @@
       "32": "images/perfecto_filter32.png",
       "48": "images/perfecto_filter48.png",
       "128": "images/perfecto_filter128.png"
-    }
+    },
+    "css": ["./popup.css"]
   },
   "icons": {
     "16": "images/perfecto_filter16.png",

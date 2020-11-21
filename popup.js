@@ -1,27 +1,26 @@
-  let searchTermInput = document.getElementById('searchTermInput');
+let searchTermInput = document.getElementById("searchTermInput");
+let slider = document.getElementById("slider");
 
-  chrome.storage.sync.get('searchTerm', function(data) {
-    searchTermInput.value = data.searchTerm;
-    searchTermInput.setAttribute('value', data.searchTerm);
-  });
+chrome.storage.sync.get("searchTerm", function (data) {
+  searchTermInput.value = data.searchTerm;
+  searchTermInput.setAttribute("value", data.searchTerm);
+});
 
-  const doSearch = () => {
-    let searchTerm = searchTermInput.value;
-	chrome.storage.sync.set({searchTerm: searchTerm}, ()=>{});  
-	// Send a message to the active tab
-	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-		var activeTab = tabs[0];
-		chrome.tabs.sendMessage(activeTab.id, {"message": "clicked_browser_action"});
-	});
+chrome.storage.sync.get("enabled", function (data) {
+  slider.checked = data.enabled;
+});
+
+var timeoutId = 0;
+
+searchTermInput.onkeydown = (element) => {
+  if (timeoutId != 0) {
+    clearTimeout(timeoutId);
   }
-  
-  var timeoutId = 0;
-  
-  searchTermInput.onkeydown = (element) => {
-	if (timeoutId != 0) {
-      clearTimeout(timeoutId);
-	}
-	timeoutId = setTimeout(() => {
-      doSearch();
-    }, 500);
-  }
+  timeoutId = setTimeout(() => {
+    chrome.storage.sync.set({ searchTerm: searchTermInput.value }, () => {});
+  }, 500);
+};
+
+slider.onclick = () => {
+  chrome.storage.sync.set({ enabled: slider.checked }, () => {});
+};

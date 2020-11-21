@@ -1,12 +1,27 @@
 <!DOCTYPE html>
-  <html>
-    <head>
-    </head>
-    <body>
-	<div>
-		<h4>Filter Perfecto CI job:</h4>
-		<input type="text" id="searchTermInput" placeholder="Job name"/>
-	</div>
-	<script src="popup.js"></script>
-    </body>
-  </html>
+<html>
+  <head>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div>
+      <table>
+        <tr>
+          <td><label class="header">Filter Perfecto CI job:</label></td>
+          <td>
+            <label class="switch">
+              <input id="slider" type="checkbox" checked />
+              <span class="slider round"></span>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="text" id="searchTermInput" placeholder="Job name" />
+          </td>
+        </tr>
+      </table>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>
