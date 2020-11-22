@@ -24,13 +24,26 @@ const doFilter = () => {
   }
 };
 
+// Push new counts to the pop-up window
 const updatePopUpCounters = (displayed, total) => {
   chrome.runtime.sendMessage({
-    message: "filter_updated",
+    message: "filter_counts_updated",
     displayed,
     total,
   });
 };
+
+// Send counts to the pop-up upon request
+chrome.runtime.onMessage.addListener(({ message }) => {
+  if (message === "get_filter_counts") {
+    const total = document.querySelectorAll("div[class^='JobsList__row']")
+      .length;
+    const displayed = document.querySelectorAll(
+      "div[class^='JobsList__row']:not([style*='display: none'])"
+    ).length;
+    updatePopUpCounters(displayed, total);
+  }
+});
 
 chrome.storage.onChanged.addListener((changes, namespace) => {
   if (thisIsPerfectoCiPage()) {
@@ -49,7 +62,6 @@ var observer = new MutationObserver((mutations) => {
         var className = mutation.target.getAttribute("class");
         if (className && className.startsWith("JobsList")) {
           doFilter();
-          updatePopUpCounters();
         }
       }
     });

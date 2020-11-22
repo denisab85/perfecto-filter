@@ -26,12 +26,27 @@ slider.onclick = () => {
   chrome.storage.sync.set({ enabled: slider.checked }, () => {});
 };
 
-chrome.runtime.onMessage.addListener(({ message, displayed, total }) => {
-  if (message === "filter_updated") {
-    var string = displayed;
-    if (displayed != total) {
-      string += " / " + total;
-    }
-    count.innerHTML = string;
+const displayCounts = (displayed, total) => {
+  var string = displayed;
+  if (displayed != total) {
+    string += " / " + total;
   }
+  count.innerHTML = string;
+};
+
+// Display updates received from the content page
+chrome.runtime.onMessage.addListener(({ message, displayed, total }) => {
+  if (message === "filter_counts_updated") {
+    displayCounts(displayed, total);
+  }
+});
+
+// Request the content page to send a counts update (used when the pop-up just appeared)
+window.addEventListener("load", (event) => {
+  chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+    var activeTab = tabs[0];
+    chrome.tabs.sendMessage(activeTab.id, {
+      message: "get_filter_counts",
+    });
+  });
 });
