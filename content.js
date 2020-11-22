@@ -7,35 +7,24 @@ const thisIsPerfectoCiPage = () => {
 const doFilter = () => {
   if (thisIsPerfectoCiPage()) {
     chrome.storage.sync.get(["searchTerm", "enabled"], function (data) {
+      var displayed = 0;
       var jobs = document.querySelectorAll("div[class^='JobsList__row']");
       jobs.forEach((element) => {
         var display =
-          data.enabled &&
-          data.searchTerm &&
-          !element.getAttribute("data-aid").includes(data.searchTerm)
-            ? "none"
-            : "block";
-        element.style.display = display;
+          !data.enabled ||
+          !data.searchTerm ||
+          element.getAttribute("data-aid").includes(data.searchTerm);
+        element.style.display = display ? "block" : "none";
+        if (display) {
+          displayed++;
+        }
       });
+      updatePopUpCounters(displayed, jobs.length);
     });
   }
 };
 
-const updatePopUpCounters = () => {
-  const total = document.evaluate(
-    "count(//div[starts-with(@class,'JobsList__row')])",
-    document,
-    null,
-    XPathResult.ANY_TYPE,
-    null
-  ).numberValue;
-  const displayed = document.evaluate(
-    "count(//div[starts-with(@class,'JobsList__row') and not (contains(@style,'display: none'))])",
-    document,
-    null,
-    XPathResult.ANY_TYPE,
-    null
-  ).numberValue;
+const updatePopUpCounters = (displayed, total) => {
   chrome.runtime.sendMessage({
     message: "filter_updated",
     displayed,
@@ -48,7 +37,6 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
     for (var key in changes) {
       if (key === "enabled" || key === "searchTerm") {
         doFilter();
-        updatePopUpCounters();
       }
     }
   }
