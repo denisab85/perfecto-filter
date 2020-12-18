@@ -3,7 +3,7 @@
 }
 
 body {
-  background-color: #edeff4;
+  background-color: #ffffff;
   margin: 6px;
   margin-bottom: 2px;
   width: 220px;
@@ -14,9 +14,14 @@ body {
   font-size: 13px;
 }
 
-td.filter > :hover {
-  background-color: #bdc3d3;
+td.filter[selected="false"] > :hover {
+  background-color: #f4f6fb;
   cursor: pointer;
+}
+
+td.filter[selected="true"] {
+  font-weight: bold;
+  background-color: #bdc3d3;
 }
 
 span.filter {
