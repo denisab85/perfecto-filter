@@ -4,7 +4,6 @@ let btnAddFilter = document.getElementById("add_filter_button");
 let btnSaveFilter = document.getElementById("save_filter_button");
 let btnCancelEdit = document.getElementById("cancel_edit_button");
 let rowFilterEditor = document.getElementById("filter_editor_row");
-let inputNewFilter = document.getElementById("new_job_name_edit");
 let table = document.getElementById("filter_table");
 
 chrome.storage.sync.get(
@@ -13,12 +12,6 @@ chrome.storage.sync.get(
     data.jobFilters.forEach((filter) =>
       addFilterRow(filter, data.selectedFilter === filter)
     );
-    addFilterRow("FILTER 6", false);
-    addFilterRow("FILTER 5", false);
-    addFilterRow("FILTER 4", false);
-    addFilterRow("FILTER 3", true);
-    addFilterRow("FILTER 2", false);
-    addFilterRow("FILTER 1", false);
   }
 );
 
@@ -28,8 +21,9 @@ const addFilterRow = (filter, selected) => {
   td.colSpan = "4";
   td.setAttribute("class", "filter");
   td.setAttribute("selected", selected);
+  td.setAttribute("value", filter);
   td.onclick = () => {
-    onFilterSelect(td);
+    onFilterSelect(filter);
   };
 
   var div = document.createElement("div");
@@ -43,11 +37,12 @@ const addFilterRow = (filter, selected) => {
   td.appendChild(div);
 };
 
-const onFilterSelect = (newTd) => {
-  var oldTd  = document.querySelector("td.filter[selected='true']");
+const onFilterSelect = (filter) => {
+  var oldTd = document.querySelector("td.filter[selected='true']");
+  var newTd = document.querySelector("td.filter[value='" + filter + "']");
   newTd.setAttribute("selected", true);
   oldTd.setAttribute("selected", false);
-  chrome.storage.sync.set({ selectedFilter: element.value }, () => {});
+  chrome.storage.sync.set({ selectedFilter: filter }, () => {});
 };
 
 chrome.storage.sync.get("enabled", function (data) {
@@ -85,6 +80,8 @@ window.addEventListener("load", (event) => {
 
 const setEditingState = (editing) => {
   let rowAddFilter = document.getElementById("add_filter_row");
+  let inputNewFilter = document.getElementById("new_filter_edit");
+  inputNewFilter.value = "";
   rowAddFilter.style.display = editing ? "none" : "table-row";
   rowFilterEditor.style.display = editing ? "table-row" : "none";
 };
@@ -94,5 +91,14 @@ btnAddFilter.onclick = () => setEditingState(true);
 btnCancelEdit.onclick = () => setEditingState(false);
 
 btnSaveFilter.onclick = () => {
+  let inputNewFilter = document.getElementById("new_filter_edit");
+  var filter = inputNewFilter.value;
   setEditingState(false);
+  if (filter) {
+    addFilterRow(filter, false);
+    chrome.storage.sync.get({ jobFilters: [] }, function (data) {
+      data.jobFilters.push(filter);
+      chrome.storage.sync.set({ jobFilters: data.jobFilters }, () => {});
+    });
+  }
 };
