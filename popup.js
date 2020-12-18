@@ -1,32 +1,49 @@
-let searchTermInput = document.getElementById("searchTermInput");
 let slider = document.getElementById("slider");
 let count = document.getElementById("count");
-let addFilterButton = document.getElementById("add_filter_button");
-let saveFilterButton = document.getElementById("save_filter_button");
-let cancelEditButton = document.getElementById("cancel_edit_button");
-let addFilterRow = document.getElementById("add_filter_row");
-let filterEditorRow = document.getElementById("filter_editor_row");
-let newJobName = document.getElementById("new_job_name_edit");
+let btnAddFilter = document.getElementById("add_filter_button");
+let btnSaveFilter = document.getElementById("save_filter_button");
+let btnCancelEdit = document.getElementById("cancel_edit_button");
+let rowAddFilter = document.getElementById("add_filter_row");
+let rowFilterEditor = document.getElementById("filter_editor_row");
+let inputNewFilter = document.getElementById("new_job_name_edit");
+let table = document.getElementById("filter_table");
 
-chrome.storage.sync.get("searchTerm", function (data) {
-  searchTermInput.value = data.searchTerm;
-  searchTermInput.setAttribute("value", data.searchTerm);
-});
+chrome.storage.sync.get(
+  { jobFilters: [], selectedFilter: "" },
+  function (data) {
+    data.jobFilters.forEach((filter) =>
+      addFilterRow(filter, data.selectedFilter)
+    );
+
+    addFilterRow("FILTER");
+  }
+);
+
+const addFilterRow = (filter, selectedFilter) => {
+  var row = table.insertRow(1);
+  var cell = row.insertCell(0);
+  cell.colSpan = "4";
+  cell.setAttribute("class", "filter");
+
+  var div = document.createElement("div");
+  div.setAttribute("filter", filter);
+  div.onkeydown = onFilterSelect;
+
+  var span = document.createElement("span");
+  span.setAttribute("class", "filter");
+  span.innerText = filter;
+  div.appendChild(span);
+
+  cell.appendChild(div);
+};
+
+const onFilterSelect = (element) => {
+  chrome.storage.sync.set({ selectedFilter: element.value }, () => {});
+};
 
 chrome.storage.sync.get("enabled", function (data) {
   slider.checked = data.enabled;
 });
-
-var timeoutId = 0;
-
-searchTermInput.onkeydown = (element) => {
-  if (timeoutId != 0) {
-    clearTimeout(timeoutId);
-  }
-  timeoutId = setTimeout(() => {
-    chrome.storage.sync.set({ searchTerm: searchTermInput.value }, () => {});
-  }, 500);
-};
 
 slider.onclick = () => {
   chrome.storage.sync.set({ enabled: slider.checked }, () => {});
@@ -57,17 +74,17 @@ window.addEventListener("load", (event) => {
   });
 });
 
-addFilterButton.onclick = () => {
-  addFilterRow.style.display = "none";
-  filterEditorRow.style.display = "table-row";
+btnAddFilter.onclick = () => {
+  rowAddFilter.style.display = "none";
+  rowFilterEditor.style.display = "table-row";
 };
 
-saveFilterButton.onclick = () => {
-  addFilterRow.style.display = "table-row";
-  filterEditorRow.style.display = "none";
+btnSaveFilter.onclick = () => {
+  rowAddFilter.style.display = "table-row";
+  rowFilterEditor.style.display = "none";
 };
 
-cancelEditButton.onclick = () => {
-  addFilterRow.style.display = "table-row";
-  filterEditorRow.style.display = "none";
+btnCancelEdit.onclick = () => {
+  rowAddFilter.style.display = "table-row";
+  rowFilterEditor.style.display = "none";
 };
