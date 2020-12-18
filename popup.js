@@ -1,6 +1,12 @@
 let searchTermInput = document.getElementById("searchTermInput");
 let slider = document.getElementById("slider");
 let count = document.getElementById("count");
+let addFilterButton = document.getElementById("add_filter_button");
+let saveFilterButton = document.getElementById("save_filter_button");
+let cancelEditButton = document.getElementById("cancel_edit_button");
+let addFilterRow = document.getElementById("add_filter_row");
+let filterEditorRow = document.getElementById("filter_editor_row");
+let newJobName = document.getElementById("new_job_name_edit");
 
 chrome.storage.sync.get("searchTerm", function (data) {
   searchTermInput.value = data.searchTerm;
@@ -50,3 +56,18 @@ window.addEventListener("load", (event) => {
     });
   });
 });
+
+addFilterButton.onclick = () => {
+  addFilterRow.style.display = "none";
+  filterEditorRow.style.display = "table-row";
+};
+
+saveFilterButton.onclick = () => {
+  addFilterRow.style.display = "table-row";
+  filterEditorRow.style.display = "none";
+};
+
+cancelEditButton.onclick = () => {
+  addFilterRow.style.display = "table-row";
+  filterEditorRow.style.display = "none";
+};

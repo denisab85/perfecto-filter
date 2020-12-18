@@ -10,25 +10,62 @@
   <body>
     <div>
       <table>
-        <tr>
-          <td><label class="header">Filter Perfecto CI job:</label></td>
-          <td>
-            <label class="switch">
-              <input id="slider" type="checkbox" checked />
-              <span class="slider round"></span>
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <input type="text" id="searchTermInput" placeholder="Job name" />
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" class="center">
-            <label id="count" class="text"></label>
-          </td>
-        </tr>
+        <body>
+          <tr>
+            <td colspan="2">
+              <label class="header">Filter Perfecto CI job:</label>
+            </td>
+            <td colspan="2" id="switch_cell">
+              <label class="switch">
+                <input id="slider" type="checkbox" checked />
+                <span class="slider round"></span>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              <input type="text" id="searchTermInput" placeholder="Job name" />
+            </td>
+          </tr>
+          <tr id="add_filter_row">
+            <td colspan="4">
+              <input
+                id="add_filter_button"
+                class="image_button"
+                type="submit"
+                value="Add another filter"
+              />
+            </td>
+          </tr>
+          <tr id="filter_editor_row">
+            <td colspan="2">
+              <input
+                type="text"
+                id="new_job_name_edit"
+                placeholder="e.g. OA_SITE"
+              />
+            </td>
+            <td>
+              <input
+                type="button"
+                class="image_button"
+                id="save_filter_button"
+              />
+            </td>
+            <td>
+              <input
+                type="button"
+                class="image_button"
+                id="cancel_edit_button"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4" class="center">
+              <label id="count" class="text"></label>
+            </td>
+          </tr>
+        </body>
       </table>
     </div>
     <script src="popup.js"></script>
