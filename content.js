@@ -6,14 +6,14 @@ const thisIsPerfectoCiPage = () => {
 
 const doFilter = () => {
   if (thisIsPerfectoCiPage()) {
-    chrome.storage.sync.get(["searchTerm", "enabled"], function (data) {
+    chrome.storage.sync.get(["selectedFilter", "enabled"], function (data) {
       var displayed = 0;
       var jobs = document.querySelectorAll("div[class^='JobsList__row']");
       jobs.forEach((element) => {
         var display =
           !data.enabled ||
-          !data.searchTerm ||
-          element.getAttribute("data-aid").includes(data.searchTerm);
+          !data.selectedFilter ||
+          element.getAttribute("data-aid").includes(data.selectedFilter);
         element.style.display = display ? "block" : "none";
         if (display) {
           displayed++;
@@ -48,7 +48,7 @@ chrome.runtime.onMessage.addListener(({ message }) => {
 chrome.storage.onChanged.addListener((changes, namespace) => {
   if (thisIsPerfectoCiPage()) {
     for (var key in changes) {
-      if (key === "enabled" || key === "searchTerm") {
+      if (key === "enabled" || key === "selectedFilter") {
         doFilter();
       }
     }
