@@ -1,3 +1,7 @@
+@import "compass/css3";
+
+@import "compass/css3";
+
 * {
   font-family: "Noto Sans TC";
 }
@@ -6,30 +10,48 @@ body {
   background-color: #ffffff;
   margin: 6px;
   margin-bottom: 2px;
-  width: 220px;
+  width: 320px;
   user-select: none;
 }
 
-.header {
+.block {
+  overflow: hidden;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.hidden {
+  display: none;
+}
+
+label.header {
   color: #425563;
   font-size: 13px;
 }
 
-td.filter[selected="false"] > :hover {
-  background-color: #f4f6fb;
-  cursor: pointer;
+.left {
+  float: left;
+  vertical-align: middle;
 }
 
-td.filter[selected="true"] {
-  font-weight: bold;
-  background-color: #d2d7e4;
+.right {
+  float: right;
+  vertical-align: middle;
 }
 
-#add_filter_row, #filter_editor_row {
-  line-height: 30px;
+ul.no_bullets {
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
 }
 
-span.filter {
+#new_filter_edit {
+  width: 275px;
+}
+
+.filter {
   font-size: 13px;
   line-height: 40px;
   padding-left: 10px;
@@ -37,16 +59,27 @@ span.filter {
   display: block;
 }
 
+.filter[selected="false"]:hover {
+  background-color: #f4f6fb;
+  cursor: pointer;
+}
+
+.filter[selected="true"] {
+  font-weight: bold;
+  background-color: #d2d7e4;
+}
+
+.footer,
+li {
+  line-height: 30px;
+}
+
 .text {
   color: #222222;
   font-size: 14px;
 }
 
-table {
-  width: 100%;
-}
-
-td.center {
+.center {
   text-align: center;
 }
 
@@ -55,7 +88,6 @@ input {
   background-color: #f4f6fb;
   outline: none;
   border: 1px solid #a4a5a7;
-  width: 100%;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -138,10 +170,6 @@ input:checked + .slider:before {
   text-align: left;
 }
 
-#filter_editor_row {
-  display: none;
-}
-
 #save_filter_button {
   background: transparent url("images/save-14.png") no-repeat bottom right;
   width: 17px;
@@ -150,6 +178,18 @@ input:checked + .slider:before {
 
 #cancel_edit_button {
   background: transparent url("images/cancel-14.png") no-repeat bottom right;
+  width: 17px;
+  height: 14px;
+}
+
+#delete_filter_button {
+  background: transparent url("images/delete-14.png") no-repeat center right;
+  width: 17px;
+  height: 14px;
+}
+
+#edit_filter_button {
+  background: transparent url("images/edit-14.png") no-repeat center right;
   width: 17px;
   height: 14px;
 }
@@ -164,4 +204,16 @@ input:checked + .slider:before {
 .image_button:hover {
   opacity: 1;
   cursor: pointer;
+}
+
+li .button_group {
+  opacity: 0;
+}
+
+li:hover .button_group {
+  opacity: 1;
+}
+
+li div {
+  width: 85%;
 }

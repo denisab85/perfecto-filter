@@ -9,59 +9,43 @@
   </head>
   <body>
     <div>
-      <table id="filter_table">
-        <body>
-          <tr>
-            <td colspan="2">
-              <label class="header">Filter Perfecto CI job:</label>
-            </td>
-            <td colspan="2" id="switch_cell">
-              <label class="switch">
-                <input id="slider" type="checkbox" checked />
-                <span class="slider round"></span>
-              </label>
-            </td>
-          </tr>
-          <tr id="add_filter_row">
-            <td colspan="4">
-              <input
-                id="add_filter_button"
-                class="image_button"
-                type="submit"
-                value="Add another filter"
-              />
-            </td>
-          </tr>
-          <tr id="filter_editor_row">
-            <td colspan="2">
-              <input
-                type="text"
-                id="new_filter_edit"
-                placeholder="e.g. OA_SITE"
-              />
-            </td>
-            <td>
-              <input
-                type="button"
-                class="image_button"
-                id="save_filter_button"
-              />
-            </td>
-            <td>
-              <input
-                type="button"
-                class="image_button"
-                id="cancel_edit_button"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td colspan="4" class="center">
-              <label id="count" class="text"></label>
-            </td>
-          </tr>
-        </body>
-      </table>
+      <div class="header block">
+        <div class="left">
+          <label class="header">Filter Perfecto CI job:</label>
+        </div>
+        <div class="right" id="switch_cell">
+          <label class="switch">
+            <input id="slider" type="checkbox" checked />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+      <div class="block">
+        <ul id="filter_list" class="no_bullets">
+        </ul>
+      </div>
+      <div class="footer block">
+        <div id="add_filter">
+          <input
+            id="add_filter_button"
+            class="image_button"
+            type="submit"
+            value="Add another filter"
+          />
+        </div>
+        <div id="filter_editor" class="hidden">
+          <div>
+            <input
+              type="text"
+              id="new_filter_edit"
+              placeholder="e.g. OA_SITE"
+            />
+            <input type="button" class="image_button" id="save_filter_button" />
+            <input type="button" class="image_button" id="cancel_edit_button" />
+          </div>
+        </div>
+        <div class="center text" id="count"></div>
+      </div>
     </div>
     <script src="popup.js"></script>
   </body>
