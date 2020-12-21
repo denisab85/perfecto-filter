@@ -1,34 +1,98 @@
+@import "compass/css3";
+
+@import "compass/css3";
+
 * {
   font-family: "Noto Sans TC";
 }
 
 body {
-  background-color: #0086bf;
+  background-color: #ffffff;
   margin: 6px;
   margin-bottom: 2px;
-  width: 183px;
+  width: 320px;
+  user-select: none;
+}
+
+.block {
+  overflow: hidden;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.hidden {
+  display: none;
 }
 
 .header {
-  color: white;
+  color: #425563;
   font-size: 13px;
+  vertical-align: middle;
+  height: 30px;
+}
+
+.left {
+  float: left;
+  vertical-align: middle;
+}
+
+.right {
+  float: right;
+  vertical-align: middle;
+}
+
+ul.no_bullets {
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
+}
+
+#filter_input {
+  width: 275px;
+}
+
+.filter {
+  font-size: 13px;
+  line-height: 40px;
+  padding-left: 10px;
+  color: #425563;
+  display: block;
+}
+
+.filter[selected="false"]:hover {
+  background-color: #f4f6fb;
+  cursor: pointer;
+}
+
+.filter[selected="true"] {
+  font-weight: bold;
+  background-color: #d2d7e4;
+}
+
+.footer,
+li {
+  line-height: 30px;
 }
 
 .text {
-  color: #d8e1e9;
+  color: #222222;
   font-size: 14px;
 }
 
-td.center {
+.center {
   text-align: center;
 }
 
 input {
   color: #464646;
-  background-color: #d2e6f6;
+  background-color: #f4f6fb;
   outline: none;
-  border: 1px solid #464646;
-  width: 170px;
+  border: 1px solid #a4a5a7;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 
 /* The switch - the box around the slider */
@@ -37,6 +101,10 @@ input {
   display: inline-block;
   width: 36px;
   height: 20px;
+}
+
+#switch_cell {
+  text-align: right;
 }
 
 /* Hide default HTML checkbox */
@@ -54,7 +122,7 @@ input {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #d2e6f6;
+  background-color: #d2dbd4;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
@@ -66,13 +134,13 @@ input {
   width: 18px;
   left: 1px;
   bottom: 1px;
-  background-color: #576269;
+  background-color: #6a7175;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
 
 input:checked + .slider {
-  background-color: #82bc41;
+  background-color: #a2c47c;
 }
 
 input:focus + .slider {
@@ -92,4 +160,62 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+/* Add button */
+#add_filter_button {
+  background: transparent url("images/add-14.png") no-repeat bottom left;
+  padding-left: 18px;
+  height: 18px;
+  color: #0086bf;
+  border: transparent;
+  text-align: left;
+}
+
+#save_filter_button {
+  background: transparent url("images/save-14.png") no-repeat bottom right;
+  width: 17px;
+  height: 14px;
+}
+
+#cancel_edit_button {
+  background: transparent url("images/cancel-14.png") no-repeat bottom right;
+  width: 17px;
+  height: 14px;
+}
+
+#delete_filter_button {
+  background: transparent url("images/delete-14.png") no-repeat center right;
+  width: 17px;
+  height: 14px;
+}
+
+#edit_filter_button {
+  background: transparent url("images/edit-14.png") no-repeat center right;
+  width: 17px;
+  height: 14px;
+}
+
+.image_button {
+  border: transparent;
+  mix-blend-mode: multiply;
+  background-color: transparent;
+  opacity: 0.6;
+}
+
+.image_button:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+li .button_group {
+  opacity: 0;
+}
+
+li:hover .button_group {
+  opacity: 1;
+}
+
+li div {
+  width: 85%;
 }
