@@ -9,7 +9,7 @@
             "request": "attach",
             "name": "Attach to Perfecto tab in Chrome",
             "port": 9222,
-            "urlFilter ": "https://igm.app.perfectomobile.com/*",
+            "url": "chrome-extension://jpjihfhlpfjihedpfcdfgfepdiimefnd/popup.html",
             "webRoot": "${workspaceFolder}"
         }
     ]
