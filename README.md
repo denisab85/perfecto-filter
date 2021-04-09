@@ -12,6 +12,7 @@ This filter extension allows to filter those results by job name.
 
 ## Using the Extension
 - Once installed, the icon of the extension will appear on the extensions bar in Chrome (look for a teal-colored funnel).
+- If not visible, find the icon under the extensions button in the right top corner of the Chrome window, beside the Google user avatar.
 - Open the Perfecto CI Dashboard page (it is the only page where this extension functions): https://your-company.app.perfectomobile.com/reporting/dashboard-ci
 - Click on the extension icon - a pop-up window will appear next to it.
 - Enable/disable filtering altogether by using the green switch in the right top corner of the pop-up window.
